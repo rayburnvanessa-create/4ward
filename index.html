@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4ward – Négy út. Négy nézőpont. Egy közös irány.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --krem:#F9F6EE; --homok:#E6D8C3; --bezs:#D7C0A7; --zsalya:#A7B89F;
+  --oliva:#6F7F5F; --terra:#C98F72; --levendula:#A7A3B3; --melyk:#4F6F6B;
+  --szoveg:#4a3b30; --szoveg-halk:#6b5a4c;
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Nunito Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--krem);color:var(--szoveg);font-family:var(--sans);font-weight:300;font-size:1.05rem;line-height:1.8}
+a{color:var(--melyk)}
+:focus-visible{outline:3px solid var(--terra);outline-offset:3px;border-radius:6px}
+
+/* Fejléc */
+header{background:var(--homok);border-bottom:1px solid var(--bezs);position:sticky;top:0;z-index:10}
+.fejlec{max-width:1080px;margin:0 auto;padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.logo{font-family:var(--serif);font-size:2rem;font-weight:600;color:var(--melyk);letter-spacing:.02em;background:none;border:0;cursor:pointer}
+nav{display:flex;gap:.4rem;flex-wrap:wrap}
+nav button{font:600 .95rem var(--sans);background:transparent;color:var(--szoveg);border:0;padding:.55rem 1.1rem;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+nav button:hover{background:var(--krem)}
+nav button[aria-selected="true"]{background:var(--melyk);color:var(--krem)}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;text-align:center;padding:5.5rem 1.5rem 9rem;background:linear-gradient(var(--krem),var(--homok))}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.15;color:var(--szoveg);max-width:15em;margin:0 auto}
+.hero p{font-family:var(--serif);font-style:italic;font-size:1.35rem;color:var(--oliva);margin-top:1.2rem}
+.hullam{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:120px;display:block}
+
+/* Elrendezés */
+main{min-height:60vh}
+.ful{display:none}
+.ful.aktiv{display:block;animation:be .5s ease}
+@keyframes be{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.ful.aktiv{animation:none}html{scroll-behavior:auto}}
+.szakasz{max-width:760px;margin:0 auto;padding:3.5rem 1.5rem}
+.szeles{max-width:1000px}
+h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.9rem,4vw,2.7rem);line-height:1.2;color:var(--melyk);margin-bottom:1.5rem}
+h3{font-family:var(--serif);font-weight:600;font-size:1.7rem;color:var(--melyk);margin-bottom:1rem}
+p+p{margin-top:1.15rem}
+.kiemelt{font-family:var(--serif);font-size:1.55rem;line-height:1.5;color:var(--szoveg);font-weight:500}
+.valaszto{width:60px;height:3px;border:0;border-radius:3px;background:var(--terra);margin:2.5rem 0}
+.idezet{font-family:var(--serif);font-style:italic;font-size:1.4rem;color:var(--oliva);border-left:3px solid var(--zsalya);padding-left:1.4rem;margin:2rem 0}
+
+/* Gombok */
+.gomb{display:inline-block;margin-top:1.8rem;background:var(--melyk);color:var(--krem);font:600 1rem var(--sans);padding:.85rem 2rem;border-radius:999px;text-decoration:none;border:0;cursor:pointer;transition:background .2s}
+.gomb:hover{background:var(--oliva)}
+.gomb.masodlagos{background:var(--terra);color:#3a2b22}
+.gomb.masodlagos:hover{background:var(--bezs)}
+
+/* Tagok */
+.tag{display:grid;grid-template-columns:140px 1fr;gap:2rem;padding:3rem 0;border-top:1px solid var(--bezs)}
+.tag:first-of-type{border-top:0}
+.jel{width:120px;height:120px;border-radius:46% 54% 50% 50%/52% 46% 54% 48%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:3rem;color:var(--krem);font-weight:500}
+.tag:nth-of-type(1) .jel{background:var(--melyk)}
+.tag:nth-of-type(2) .jel{background:var(--oliva)}
+.tag:nth-of-type(3) .jel{background:var(--terra);color:#3a2b22}
+.tag:nth-of-type(4) .jel{background:var(--levendula);color:#3a2b22}
+.tag .elerhetoseg{margin-top:1.5rem;font-weight:600}
+
+/* Programok */
+.program-fejlec{background:var(--homok);border-radius:28px;padding:2.5rem 2rem;text-align:center;margin-bottom:2rem}
+.program-fejlec h2{margin-bottom:.6rem}
+.program-fejlec p{font-family:var(--serif);font-size:1.4rem;font-style:italic;color:var(--oliva)}
+.lista{background:var(--homok);border-radius:28px;padding:2rem 2rem 2rem 2.2rem;margin:1.5rem 0 2.5rem;list-style:none}
+.lista li{position:relative;padding:.5rem 0 .5rem 1.8rem}
+.lista li::before{content:"";position:absolute;left:0;top:1.05rem;width:.8rem;height:.8rem;border-radius:50%;background:var(--terra)}
+.lista-cim{font-family:var(--serif);font-size:1.45rem;font-weight:500;color:var(--szoveg)}
+.uzenetek{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;margin-top:1.5rem}
+.uzenet{border-radius:26px;padding:1.8rem 1.6rem}
+.uzenet:nth-child(1){background:var(--zsalya)}
+.uzenet:nth-child(2){background:var(--bezs)}
+.uzenet:nth-child(3){background:var(--levendula)}
+.uzenet strong{display:block;font-family:var(--serif);font-size:1.5rem;font-weight:600;margin-bottom:.6rem;color:#33291f}
+.uzenet p{color:#33291f;font-size:1rem;line-height:1.7}
+
+/* Lábléc */
+footer{background:var(--melyk);color:var(--krem);text-align:center;padding:2.5rem 1.5rem;margin-top:3rem}
+footer .logo{color:var(--krem);cursor:default;font-size:1.8rem}
+footer p{font-size:.95rem;color:var(--homok)}
+footer a{color:var(--krem)}
+
+@media (max-width:680px){
+  .tag{grid-template-columns:1fr;gap:1rem}
+  .jel{width:90px;height:90px;font-size:2.3rem}
+  .fejlec{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="fejlec">
+    <button class="logo" data-ful="rolunk" aria-label="4ward – kezdőlap">4ward</button>
+    <nav role="tablist" aria-label="Főmenü">
+      <button role="tab" data-ful="rolunk" aria-selected="true">Rólunk</button>
+      <button role="tab" data-ful="tagok" aria-selected="false">Tagjaink</button>
+      <button role="tab" data-ful="programok" aria-selected="false">Programok</button>
+      <button role="tab" data-ful="kapcsolat" aria-selected="false">Kapcsolat</button>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Négy út. Négy nézőpont. Egy közös irány.</h1>
+  <p>4ward</p>
+  <svg class="hullam" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,70 C240,10 480,110 720,60 C960,10 1200,100 1440,40 L1440,120 L0,120Z" fill="#A7B89F" opacity=".55"/>
+    <path d="M0,90 C260,40 520,120 780,80 C1040,40 1250,110 1440,70 L1440,120 L0,120Z" fill="#D7C0A7" opacity=".8"/>
+    <path d="M0,105 C300,70 600,125 900,100 C1150,80 1320,115 1440,95 L1440,120 L0,120Z" fill="#F9F6EE"/>
+  </svg>
+</div>
+
+<main>
+
+<!-- RÓLUNK -->
+<section id="rolunk" class="ful aktiv" role="tabpanel">
+  <div class="szakasz">
+    <p class="kiemelt">Van, aki a természetben találta meg a kapcsolódás lehetőségét, van, akit a személyes életútja és annak nehézségei vezettek az önismeret felé. Van, aki a történetek, a szerepek és az emberi kapcsolatok mélyebb összefüggéseit kutatja, és van, aki a sport, a teljesítmény és a tudatos fejlődés világából érkezett.</p>
+    <hr class="valaszto">
+    <p>Más tapasztalatok formáltak bennünket, más eszközökhöz nyúlunk, és nem feltétlenül ugyanonnan közelítünk egy-egy kérdéshez. Mégis találtunk valamit, ami összeköt.</p>
+    <p>A kíváncsiságot az ember iránt. A nyitottságot arra, hogy a megszokott értelmezéseinken túl is keressünk válaszokat. És azt a meggyőződést, hogy mindannyiunkban több rejlik annál, mint amit a hétköznapi szerepeink, szokásaink és a magunkról kialakított elképzeléseink megmutatnak.</p>
+    <p class="idezet">A 4ward ebből a találkozásból született.</p>
+    <p>Nem azért dolgozunk együtt, mert ugyanazt gondoljuk mindenről. Éppen ellenkezőleg: értéknek tartjuk, hogy különböző tapasztalatainkkal és megközelítéseinkkel más-más oldalról tudunk ránézni ugyanarra a helyzetre.</p>
+    <p>A természet, a test, az érzelmek, a gondolatok, a kapcsolatok és a személyes történeteink mind részei annak, akik vagyunk. Előfordul, hogy egy beszélgetés indít el bennünk valamit. Máskor egy mozdulat, egy illat, egy új nézőpont, egy régi emlék vagy egy olyan kérdés, amelyet korábban még nem tettünk fel magunknak.</p>
+    <p>Mi ezeknek a találkozásoknak szeretnénk teret adni. Olyan alkalmakat és közös élményeket szeretnénk létrehozni, ahol lehetőség nyílik kilépni a megszokott működésünkből, felfedezni új oldalainkat, kapcsolódni másokhoz, és közben saját magunkhoz is.</p>
+    <p>A 4wardban négy különböző út találkozik. Nem azért, hogy eggyé váljanak, hanem hogy együtt új lehetőségeket nyissanak. És talán ez az, amit a leginkább szeretnénk továbbadni: hogy a saját utunkat senki nem járhatja be helyettünk, de az útközben születő találkozások egészen új irányokat mutathatnak.</p>
+    <button class="gomb" data-ful="programok">Programjaink</button>
+    <button class="gomb masodlagos" data-ful="tagok" style="margin-left:.6rem">Ismerj meg minket</button>
+  </div>
+</section>
+
+<!-- TAGJAINK -->
+<section id="tagok" class="ful" role="tabpanel">
+  <div class="szakasz szeles">
+    <h2>Tagjaink</h2>
+
+    <article class="tag">
+      <div class="jel" aria-hidden="true">J</div>
+      <div>
+        <h3>Dénes Judit</h3>
+        <p>A sport hosszú ideje meghatározó része az életemnek. Egyéni és csapatsportokban szerzett sportolói tapasztalataimat később edzőként, sportszervezőként, majd nemzetközi versenybíróként egészítettem ki. Az amatőr sporttól az élsportig, különböző szerepekben és nézőpontokból volt lehetőségem megismerni ezt a világot. Jelenleg a Testnevelési Egyetem sportmentáltréner mesterszakán folytatom tanulmányaimat. Hiszek a sport személyiségformáló erejében, és abban, hogy a sportpályán szerzett tapasztalatok és az ösztönösen elsajátított készségek tudatosan alkalmazható erőforrásokká válhatnak. A különböző szerepekben szerzett tapasztalataim fokozatosan egy holisztikus szemlélet felé vezettek, amelyben az emberi működést a testi, pszichológiai és társas tényezők kölcsönhatásában értelmezem.</p>
+        <p>A felgyorsult világ elvárásai és biopszichoszociális szükségleteink közötti feszültség különösen foglalkoztat. Úgy gondolom, hogy az egyensúly megteremtéséhez nem elegendő pusztán felismernünk ezeket az ellentmondásokat: olyan megoldásokat kell találnunk, amelyek a mindennapi életünkbe is beilleszthetők, és hosszú távon fenntarthatók. A munkámban ezért áll hozzám közel a rendszerszemlélet, a tudatos célkitűzés, a működő rutinok kialakítása és az apró, következetes lépésekre épülő fejlődés.</p>
+        <p>Hiszek az egyéni fejlődés közösségformáló erejében. Abban, hogy amit önmagunkban építünk, az a kapcsolatainkban és a közösségeinkben is tovább él. Bár az önismeret és a változás egyéni felelősség, a fejlődés nem feltétlenül magányos folyamat. A közös gondolkodás, a megosztott tapasztalatok és az egymáshoz való kapcsolódás mind hozzájárulhatnak ahhoz, hogy önmagunkat is jobban megértsük. Hiszem, hogy a saját működésünk tudatosításával és az önmagunkba fektetett munkával teremthetjük meg az egészségesebb, élhetőbb közösségek alapjait, a személyes kapcsolatainktól a tágabb társadalmi környezetünkig.</p>
+        <p>Számomra a 4ward ezt a szemléletet képviseli: teret adni az önreflexiónak, az egyéni fejlődésnek és a közösségi kapcsolódásnak, hogy a felismeréseinkből a mindennapokban is működő változás születhessen.</p>
+        <p class="elerhetoseg"><a href="mailto:judit.denes@icloud.com">judit.denes@icloud.com</a><br><a href="tel:+36704557677">+36 70 455 76 77</a></p>
+      </div>
+    </article>
+
+    <article class="tag">
+      <div class="jel" aria-hidden="true">G</div>
+      <div>
+        <h3>Pálfyné Dénes Gabi</h3>
+        <p>Két csodás kislány anyukája, feleség, dōTERRA életmód tanácsadó vagyok.</p>
+        <p>Négy évvel ezelőtt találkoztam az esszenciális olajokkal, és teljesen elvarázsolt a természet ereje, hatékonysága. Azóta nemcsak a mindennapjaim részét képezi a használatuk, hanem hivatásommá vált másokat támogatni, és megmutatni, hogy érdemes visszanyúlnunk az anyatermészethez, amikor a belső egyensúlyunk megőrzése a cél. Én a dōTERRÁban találtam meg azt a tisztaságot, transzparenciát, felelősségvállalást és mély közösségi értéket, amivel teljes szívvel azonosulni tudok.</p>
+        <p>Életem egy meghatározó szakaszát a zene világában töltöttem, ezért nagyon közel állnak hozzám az érzelmek finom rezdülései, a szavak nélküli egymásra figyelés. Az illóolajok megmutatták nekem, hogy az illatok nem csupán kellemes élményt nyújtanak, hanem erős támaszai lehetnek a belső utunknak. Ott vannak mellettünk, amikor elfáradunk, erőt adnak, vagy épp csendesen megölelnek a nehéz pillanatokban, és gyengéden továbbsegítenek, amikor úgy érezzük, elakadtunk.</p>
+        <p>Hivatásomnak érzem rávilágítani arra, hogy a mesterséges, a mű, az alacsony rezgésű dolgok helyett mennyire fontos újra élő, tiszta, rezgő anyagokkal körülvennünk magunkat. A holisztikus szemlélet és a természethez való visszakapcsolódás a legfőbb iránytűim. Hiszem, hogy a testünk, a lelkünk és az elménk egyetlen finom, összefüggő egység. A munkám során igyekszem megmutatni, hogy a növényi esszenciák ezen a holisztikus hármas síkon, a fizikai test, a szellem és a mély érzelmek szintjén is valódi támogatást nyújthatnak.</p>
+        <p>Segítek, hogy megtaláld azokat a tiszta, gyengéd, természetes eszközöket, melyek támogatásával megállhatsz, befelé figyelhetsz, és visszatalálhatsz a saját belső egyensúlyodhoz és harmóniádhoz.</p>
+      </div>
+    </article>
+
+    <article class="tag">
+      <div class="jel" aria-hidden="true">T</div>
+      <div>
+        <h3>Tóth Timi</h3>
+        <p>Több mint tíz éve járom a saját önismereti utamat, és azt hiszem, ez az egyik legfontosabb része annak, amit ma magammal hozok. Nagyon sokféle módszerrel és szemlélettel találkoztam az évek során, és nemcsak tanultam ezekből, hanem a saját életemben is megtapasztaltam, hogy mennyit tudnak adni.</p>
+        <p>Voltak nagyon nehéz időszakaim, többek között a gyász feldolgozásában is, amikor ezek a módszerek és az önismereti munka gyakorlatilag életben tartottak. És talán ezekből az időszakokból tanultam a legtöbbet.</p>
+        <p>Közben sokféle irányból érkeztem ide. Hipnoterapeutaként végeztem, Reikivel foglalkozom, és az asztrológia is a szívem csücske, de van egy agrármérnöki diplomám is, és több mint húsz éve a lovassport az életem része.</p>
+        <p>A lovak nagyon sokat tanítottak nekem arról, hogy mit jelent igazán jelen lenni. Egy ló mellett sokszor nincs idő hosszasan gondolkodni: gyorsan kell dönteni, és közben észre kell venni azokat az apró rezdüléseket is, amelyekből a másik kommunikál – sokszor teljesen szavak nélkül. Ez a fajta figyelem és jelenlét az életem más területein is nagyon sokat adott.</p>
+        <p>Talán innen is jön az, hogy számomra nagyon fontos a természetközeliség és az, hogy visszataláljunk a saját testünkhöz.</p>
+        <p>A női lét ciklikusságát is ebben a rendszerben látom. A testünk folyamatosan kommunikál velünk, változik, jelez – a hormonális egyensúlyunkon, a ciklusunkon, a közérzetünkön keresztül is. Mégis sokszor megtanulunk nem figyelni ezekre a jelekre, vagy egyszerűen túllépni rajtuk. Én abban hiszek, hogy érdemes lenne újra megtanulnunk meghallani, amit a lelkünk a testünkön keresztül mond.</p>
+        <p>Ezért áll hozzám közel a holisztikus szemlélet is. Hogy ne különálló részekként nézzünk a testre, a lélekre és a szellemre, hanem egy egészként.</p>
+        <p>És talán éppen ezért vallom, hogy nem létezik egyetlen módszer, ami mindenkinek és minden élethelyzetben működik. Szeretem azokat a különböző megközelítéseket egymással összekapcsolni, amelyek támogatják egymást, és mindig azt keresni, hogy az adott embernek éppen mire van szüksége.</p>
+        <p>Én ebben szeretnék támogatást adni: egy biztonságos, elfogadó térben, ahol lehet egy kicsit megállni, befelé figyelni, meghallani a saját jelzéseinket, és közelebb kerülni önmagunkhoz.</p>
+        <p>Nem kész válaszokat szeretnék adni, hanem abban kísérni, hogy mindenki megtalálhassa a saját válaszait és a saját útját.</p>
+      </div>
+    </article>
+
+    <article class="tag">
+      <div class="jel" aria-hidden="true">V</div>
+      <div>
+        <h3>Vanessa</h3>
+        <p>Drámapedagógusként és irodalomtanárként kezdtem a pályámat. Mindig is érdekelt az emberi történetek sokszínűsége, a szerepeink, a kapcsolataink és az, hogy mi minden formálja azt, akik vagyunk. A pedagógiai munkám során, különösen hátrányos helyzetű gyermekekkel dolgozva, egyre többször találkoztam olyan élethelyzetekkel, amelyek túlmutattak az egyéni történeteken. Elkezdett foglalkoztatni, hogy mennyi mindent hozunk magunkkal a családunkból, a múltunkból, és hogyan élnek tovább bennünk olyan mintázatok, amelyeknek sokszor nem is vagyunk tudatában.</p>
+        <p>Saját önismereti utam, az életem meghatározó veszteségei és fordulópontjai is egyre mélyebbre vittek ezekben a kérdésekben. Az Integrál Akadémián, majd az ICON integrál család- és rendszerállító képzésén olyan szemlélettel és eszközökkel találkoztam, amelyek új megértést adtak számomra az emberi működésről. Különösen közel került hozzám a rendszerszemlélet: a családi kötődések, a valahová tartozás vágya, a láthatatlan lojalitások és a tudattalan sorsátvállalások világa. Az, hogy sokszor szeretetből, a családunkhoz való hűségből hordozunk tovább olyan terheket, amelyek nem a mieink, és közben elveszíthetjük a kapcsolatot a saját utunkkal.</p>
+        <p>Ma integrál szemléletű egyéni kísérőként és családállítóként dolgozom. Az egyéni konzultációk és az állítások során egyaránt az ember mélyebb megértése érdekel: nemcsak az, ami látható, hanem az is, ami a felszín alatt hat ránk. Fontos számomra, hogy a hozzám érkezők biztonságos, elfogadó térben találkozhassanak saját történetükkel, érzéseikkel és működéseikkel. Nem kész válaszokat szeretnék adni, hanem kísérni őket abban, hogy felismeréseken keresztül közelebb kerüljenek önmagukhoz. Hiszem, hogy a múltunk megértése nem arról szól, hogy benne maradjunk, hanem hogy felismerjük, mit hordozunk belőle, megtaláljuk a saját helyünket, és képessé váljunk a saját életünket élni.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PROGRAMOK -->
+<section id="programok" class="ful" role="tabpanel">
+  <div class="szakasz">
+    <div class="program-fejlec">
+      <h2>Vissza a saját erődhöz</h2>
+      <p>Háromnapos önismereti elvonulás</p>
+    </div>
+
+    <p class="lista-cim">Ha a következő mondatok közül legalább kettő igaz rád is, szeretettel várunk:</p>
+    <ul class="lista">
+      <li>Nehezedre esik nemet mondani</li>
+      <li>Inkább csendben maradsz, nehogy kinevessenek</li>
+      <li>Félsz konfliktust vállalni, nehogy megbántsd a másikat</li>
+      <li>Félsz kimondani, amit érzel, nehogy elveszítsd a másikat</li>
+      <li>Inkább ökölbe szorítod a kezed, minthogy kimond azt, ami benned van</li>
+      <li>Mindenről neked kell gondoskodnod, és közben elveszel</li>
+      <li>Már régóta van benned egy üvöltés, ami nem jön ki, aminek nem mersz hangot adni</li>
+      <li>Azt veszed észre, hogy körülötted mindenki dühös, de te nem vagy az</li>
+      <li>Nagyon sokáig nem érzel semmit, utána pedig hirtelen kirobban belőled, úgy, hogy akár te magad is megijedsz tőle</li>
+      <li>Azt érzed, ha egyszer megengednéd, hogy dühös legyél, annak soha nem lenne vége, és akkora erő van benne, hogy elpusztítaná a világot</li>
+      <li>Azt érzed, nem tudod megvédeni magad</li>
+      <li>Észrevetted már, hogy úgy beszélsz magaddal, mint egy bántalmazó?</li>
+      <li>Eleged van abból, hogy azt érzed, mindenhol csak kihasználnak</li>
+      <li>Szeretnéd végre, hogy a dolgok ne csak megtörténjenek veled, hanem hatásod is legyen rájuk</li>
+    </ul>
+
+    <p class="kiemelt">A saját erőnkhöz való kapcsolódás sokkal többről szól, mint hogy megtanuljunk határozottan nemet mondani. Az erőnkkel való kapcsolat meghatározza, hogyan viszonyulunk önmagunkhoz és hogyan kapcsolódunk másokhoz. Az erőnkkel való kapcsolatot pedig az határozza meg, hogy milyen érzéseket engedünk meg magunknak, és milyen mintákat hozunk magunkkal a családi rendszerünkből.</p>
+    <hr class="valaszto">
+    <p>Ezen a háromnapos elvonuláson az erő, a düh és a határhúzás témáit járjuk körül testi, érzelmi, lelki és rendszerszintű megközelítésben. Csoportos testorientált gyakorlatokkal, rendszerállítással és az illatok finom energiájával fedezheted fel, mi választ el a saját erődtől, és hogyan tudsz egyre inkább önazonosan jelen lenni az életedben és a kapcsolataidban.</p>
+    <p>A mély önismereti folyamatok mellett többet megtudhatsz a dühről, annak fejlődéslélektani helyéről és fontosságáról, és mellette helyet kap a pihenés, a lelassulás, a megélt tapasztalatok integrálása is. Lesz tere annak, hogy megértsd és megtaláld azokat az erőforrásokat, gyakorlatokat és tudást, amivel az elvonulás után a hétköznapokban is tovább tudod vinni az erődbe állásod folyamatát.</p>
+    <p>Megvizsgáljuk, hogyan viszonyulunk a saját erőnkhöz, mi nehezíti a hozzáférést, és milyen minták befolyásolják azt, ahogyan önmagunkat képviseljük.</p>
+    <p class="idezet">Nem az a cél, hogy egy újabb elvárásnak felelj meg, hanem hogy élhess az erőddel anélkül, hogy bántanál vele.</p>
+    <p>Az erő nem egyenlő az erőszakkal. A düh nem feltétlenül romboló, a határhúzás pedig nem jelenti azt, hogy elutasítjuk a másikat.</p>
+    <p>A közös munka során aktívan használjuk a testünket, a tekintetünket, a hangunkat és a mozdulatainkat is. Megtapasztalhatod, milyen érzés kiállni magadért, és azt is, mi történik benned, amikor valaki más képviseli az erejét veled szemben.</p>
+    <p>Teret adunk annak, hogy felismerd és megértsd a dühödet, kapcsolódj a benne rejlő energiához, és kipróbáld, hogyan képviselheted magad úgy, hogy közben másokkal is kapcsolatban maradsz. Megélheted, milyen, amikor az erődben állsz, és a másik ettől nem érzi magát fenyegetve, hanem ünnepli az erődet.</p>
+
+    <hr class="valaszto">
+    <h2 style="font-size:2rem">Amit szeretnénk, hogy magaddal vigyél az elvonulásról</h2>
+    <div class="uzenetek">
+      <div class="uzenet"><strong>Vanessa</strong><p>Nem akarom, hogy innentől minden csatározásba belekezdj, azt szeretném, hogy amikor fontos, már ne cserben hagyd magad, hanem ki tudj állni magadért!</p></div>
+      <div class="uzenet"><strong>Timi</strong><p>Azt szeretném, hogy egy erős, stabil helyről oda tudj fordulni azokhoz a részeidhez, akik sebezhetőek.</p></div>
+      <div class="uzenet"><strong>Gabi</strong><p>Szeretném, ha megtanulnád, hogy sosem vagy egyedül! Legyen szó érzelmi folyamatokról, vagy a tested támogatásáról, a természet és az emberi közösségek ereje mindig melletted állnak az utadon!</p></div>
+    </div>
+    <a class="gomb" href="mailto:judit.denes@icloud.com?subject=Érdeklődés%20–%20Vissza%20a%20saját%20erődhöz">Érdeklődöm az elvonulás iránt</a>
+  </div>
+</section>
+
+<!-- KAPCSOLAT -->
+<section id="kapcsolat" class="ful" role="tabpanel">
+  <div class="szakasz">
+    <h2>Kapcsolat</h2>
+    <p>Kérdésed van a programmal kapcsolatban, vagy szeretnéd megtudni, hogyan tudsz csatlakozni? Írj nekünk vagy hívj bátran.</p>
+    <hr class="valaszto">
+    <p class="kiemelt">Dénes Judit<br><a href="mailto:judit.denes@icloud.com">judit.denes@icloud.com</a><br><a href="tel:+36704557677">+36 70 455 76 77</a></p>
+    <a class="gomb" href="mailto:judit.denes@icloud.com">Írok egy e-mailt</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="logo">4ward</div>
+  <p>Négy út. Négy nézőpont. Egy közös irány.</p>
+</footer>
+
+<script>
+(function(){
+  var panelek = document.querySelectorAll('.ful');
+  var fulek = document.querySelectorAll('nav [role="tab"]');
+  function mutat(id, gorgetes){
+    if(!document.getElementById(id)) id = 'rolunk';
+    panelek.forEach(function(p){ p.classList.toggle('aktiv', p.id === id); });
+    fulek.forEach(function(f){ f.setAttribute('aria-selected', f.dataset.ful === id ? 'true' : 'false'); });
+    if(gorgetes) window.scrollTo({top:0});
+  }
+  document.querySelectorAll('[data-ful]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var id = el.dataset.ful;
+      try{ history.replaceState(null,'','#'+id); }catch(e){}
+      mutat(id, true);
+    });
+  });
+  window.addEventListener('hashchange', function(){ mutat(location.hash.slice(1), true); });
+  mutat(location.hash.slice(1), false);
+})();
+</script>
+</body>
+</html>
